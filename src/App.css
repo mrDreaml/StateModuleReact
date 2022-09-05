@@ -1,0 +1,22 @@
+.app {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+.app-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 900px;
+}
+
+.app-header_nav {
+    display: flex;
+    gap: 10px;
+}
+
+.app-body {
+    display: flex;
+    width: 900px;
+}
