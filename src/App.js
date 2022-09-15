@@ -1,7 +1,7 @@
 import './App.css';
 import { navigationModule } from "./state";
 import useSelector from "./lib/useSelector";
-import Store from './Store'
+import Store from './components/store'
 
 const NAV_MAP = {
     store: Store,

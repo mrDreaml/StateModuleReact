@@ -1,8 +1,8 @@
-import logo from './logo.svg';
+import logo from '../../shared/logo.svg';
 import React, {useCallback, useEffect, useMemo, useState} from 'react'
-import {dataModule, navigationModule} from "./state";
-import useSelector from "./lib/useSelector";
-import {getFilteredData} from "./state/selectors";
+import {dataModule, navigationModule} from "../../state";
+import {getFilteredData} from "../../state/selectors";
+import useSelector from "../../lib/useSelector";
 
 import './Store.css'
 
