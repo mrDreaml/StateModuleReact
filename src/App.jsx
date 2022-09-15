@@ -1,13 +1,17 @@
 import React from 'react'
-import './App.css'
 import { navigationModule } from './state'
 import useSelector from './lib/useSelector'
 import Store from './components/store'
+import Basket from './components/basket'
+import Header from './components/header'
+import Profile from './components/profile'
+
+import './App.css'
 
 const NAV_MAP = {
     store: Store,
-    basket: () => null,
-    profile: () => null,
+    basket: Basket,
+    profile: Profile,
 }
 
 const Main = () => {
@@ -16,30 +20,11 @@ const Main = () => {
     return <Component />
 }
 
-const NavMenu = () => {
-    const activeTab = useSelector(navigationModule, state => state.activeTab)
-    const handleNavigation = e => {
-        navigationModule.state.activeTab = e.target.name
-    }
-    return (
-        <nav className='app-header_nav'>
-            <button name='store' onClick={handleNavigation} className={activeTab === 'store' ? 'button_active' : ''}>store</button>
-            <button name='basket' onClick={handleNavigation} className={activeTab === 'basket' ? 'button_active' : ''}>basket</button>
-            <button name='profile' onClick={handleNavigation} className={activeTab === 'profile' ? 'button_active' : ''}>profile</button>
-        </nav>
-    )
-}
-const App = () => {
-
-  return (
+const App = () => (
     <div className='app'>
-      <header className='app-header'>
-          <h1>NFT shop</h1>
-          <NavMenu />
-      </header>
+        <Header />
       <Main />
     </div>
   )
-}
 
 export default App

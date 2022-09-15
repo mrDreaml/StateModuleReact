@@ -1,7 +1,7 @@
 const formatString = str => str.toLowerCase().trim()
 
 export const getFilteredData = (dataModuleState, { basketFilters }) =>
-    dataModuleState.basket.filter(({ price, title, description }) => {
+    dataModuleState.items.filter(({ price, title, description }) => {
         const titleFormatted = formatString(title)
         const descriptionFormatted = formatString(description)
         const searchFormatted = formatString(basketFilters.search)

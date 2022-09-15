@@ -1,8 +1,9 @@
 import logo from '../../shared/logo.svg'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { dataModule, navigationModule } from '../../state'
-import { getFilteredData } from '../../state/selectors'
-import useSelector from '../../lib/useSelector'
+import React, { useEffect } from 'react'
+import { dataModule } from '../../state'
+
+import StoreHeader from './StoreHeader'
+import StoreDataView from './StoreDataView'
 
 import './Store.css'
 
@@ -85,84 +86,9 @@ const getData = () => new Promise(res => {
     }, 1000)
 })
 
-const StoreItem = ({ title, description, price, src }) => {
-
-    return (
-        <div className='store-item' title='Click to add to basket'>
-            <img className='store-item_image' src={src} alt={title} />
-            <h2 className='store-item_title'>({title}) {description}</h2>
-            <h3 className='store-item_price'>Price: {price}</h3>
-        </div>
-    )
-}
-
-const PriceFilter = ({ name, initialValue = '0', onChange }) => {
-    const [value, setValue] = useState(initialValue)
-    return (
-        <div className='filter_range'>
-            <label htmlFor={name}>Price</label>
-            <input
-                name={name}
-                onChange={({ target: { value } }) => {
-                setValue(value)
-                onChange?.(name, value)
-            }}
-                type='range'
-                value={value}
-                min='0'
-                max='5000'
-                step='10'
-            />
-            <label htmlFor='filter-price'>{value} $</label>
-        </div>
-    )
-}
-
-const SearchFilter = ({ name, placeholder = 'search..', initialValue = '', onChange }) => {
-    const [value, setValue] = useState(initialValue)
-    return <input
-        name={name}
-        onChange={({ target: { value } }) => {
-            setValue(value)
-            onChange?.(name, value)
-        }}
-        type='text'
-        value={value}
-        className='filter_input'
-        placeholder={placeholder}
-    />
-}
-
-const StoreHeader = () => {
-    const filterHandler = useCallback((name, value) => {
-        navigationModule.state.basketFilters = { ...navigationModule.state.basketFilters, [name]: value }
-    }, [])
-    const initialValues = useMemo(() => navigationModule.state.basketFilters, [])
-    return (
-        <header className='store-header'>
-            <SearchFilter name='search' onChange={filterHandler} initialValue={initialValues.search} />
-            <PriceFilter name='price' onChange={filterHandler} initialValue={initialValues.price} />
-        </header>
-    )
-}
-
-const StoreDataView = () => {
-    const basketFilters = useSelector(navigationModule, state => state.basketFilters)
-    const storeItems = useSelector(dataModule, state => getFilteredData(state, { basketFilters }), [basketFilters])
-
-    return (
-        <main className='store-main'>
-            {!storeItems.length && 'Loading...'}
-            {storeItems.map(({ id, title, description, price, src }) =>
-                <StoreItem key={id} title={title} description={description} price={price} src={src} />
-            )}
-        </main>
-    )
-}
-
 const Store = () => {
     useEffect(() => {
-        getData().then(res => dataModule.state.basket = res)
+        getData().then(res => dataModule.state.items = res)
     }, [])
     return (
         <div className='store'>

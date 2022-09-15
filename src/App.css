@@ -16,3 +16,9 @@
     display: flex;
     gap: 10px;
 }
+
+.app-header_button_effect {
+    transition: .2s;
+    background-color: aqua;
+    transform: translateY(-5px);
+}

@@ -1,0 +1,38 @@
+.basket {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.basket_table {
+    border: 1px solid #fff;
+    width: 100%;
+    background-color: #444;
+}
+
+.basket_table-control-column {
+    width: 0;
+}
+
+.basket_totalSum {
+    text-align: right;
+    padding-right: 50px;
+}
+
+.basket_table th {
+    background-color: #222;
+}
+
+.basket_table tr:nth-child(2n) {
+    background-color: #333;
+}
+
+.basket_button-pay {
+    align-self: center;
+    border: 1px solid chartreuse;
+}
+
+.basket_button-pay:hover {
+    background-color: chartreuse;
+}
