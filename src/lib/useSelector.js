@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 
 const deepFreeze = obj => {
     Object.keys(obj).forEach(prop => {
@@ -7,8 +7,13 @@ const deepFreeze = obj => {
     return Object.freeze(obj);
 };
 
-const useSelector = (StateModule, selector) => {
-    const [state, updateState] = useState(selector(StateModule.state))
+const EMPTY_ARRAY = []
+
+const useSelector = (StateModule, selector, deps = EMPTY_ARRAY) => {
+    const [state, updateState] = useState(selector({ ...StateModule.state }))
+    useEffect(() => {
+        updateState(selector({ ...StateModule.state }))
+    }, deps)
     useEffect(() => {
         const subscriber = (newRootState) => {
             const newState = selector(newRootState)

@@ -1,6 +1,7 @@
 .app {
     display: flex;
     align-self: center;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -14,9 +15,4 @@
 .app-header_nav {
     display: flex;
     gap: 10px;
-}
-
-.app-body {
-    display: flex;
-    width: 900px;
 }

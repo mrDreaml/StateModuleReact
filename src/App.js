@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { navigationModule } from "./state";
 import useSelector from "./lib/useSelector";

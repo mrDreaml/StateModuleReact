@@ -1,5 +1,48 @@
 .store {
+    display: flex;
+    flex-direction: column;
     margin-top: 10px;
     min-height: 600px;
-    border: 1px solid red;
+    width: 1200px;
+}
+
+.store-header {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    width: 900px;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.store-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.store-item {
+    box-sizing: border-box;
+    max-width: 260px;
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #e52cff22;
+    cursor: default;
+}
+
+.store-item:hover {
+    box-shadow: 1px 1px 3px #e52cff;
+}
+
+.store-item_price, .store-item_title {
+    text-align: center;
+}
+
+.filter_range {
+    display: flex;
+    gap: 10px;
+    width: 250px;
 }
