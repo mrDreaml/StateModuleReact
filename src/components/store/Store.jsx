@@ -1,8 +1,8 @@
-import logo from '../../shared/logo.svg';
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
-import {dataModule, navigationModule} from "../../state";
-import {getFilteredData} from "../../state/selectors";
-import useSelector from "../../lib/useSelector";
+import logo from '../../shared/logo.svg'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { dataModule, navigationModule } from '../../state'
+import { getFilteredData } from '../../state/selectors'
+import useSelector from '../../lib/useSelector'
 
 import './Store.css'
 
@@ -76,7 +76,7 @@ const STORE_ITEMS = [
         description: 'Magnesium',
         price: '3$',
         src: logo,
-    }
+    },
 ]
 
 const getData = () => new Promise(res => {
@@ -107,11 +107,11 @@ const PriceFilter = ({ name, initialValue = '0', onChange }) => {
                 setValue(value)
                 onChange?.(name, value)
             }}
-                type="range"
+                type='range'
                 value={value}
-                min="0"
-                max="5000"
-                step="10"
+                min='0'
+                max='5000'
+                step='10'
             />
             <label htmlFor='filter-price'>{value} $</label>
         </div>
@@ -126,7 +126,7 @@ const SearchFilter = ({ name, placeholder = 'search..', initialValue = '', onCha
             setValue(value)
             onChange?.(name, value)
         }}
-        type="text"
+        type='text'
         value={value}
         className='filter_input'
         placeholder={placeholder}
@@ -165,7 +165,7 @@ const Store = () => {
         getData().then(res => dataModule.state.basket = res)
     }, [])
     return (
-        <div className="store">
+        <div className='store'>
             <StoreHeader />
             <StoreDataView />
         </div>

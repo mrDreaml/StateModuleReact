@@ -11,5 +11,5 @@ export const dataModule = new StateModule({
 
 window.getState = () => console.log({
     navigationState: { ...navigationModule.state },
-    dataModule: { ...dataModule.state }
+    dataModule: { ...dataModule.state },
 })
