@@ -14,8 +14,14 @@ export const basketModule = new StateModule({
     orders: {},
 })
 
+export const profileModule = new StateModule({
+    userName: 'User Name',
+    historyOrders: [],
+})
+
 window.getState = () => console.log({
     navigationState: { ...navigationModule.state },
     dataModule: { ...dataModule.state },
     basketModule: { ...basketModule.state },
+    profileModule: { ...profileModule.state },
 })

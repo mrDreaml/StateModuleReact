@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import useSelector from '../../lib/useSelector'
-import {basketModule, dataModule, navigationModule} from '../../state'
+import { basketModule, dataModule, navigationModule } from '../../state'
 import { getFilteredData } from '../../state/selectors'
-import {_omit} from "../../utils/_";
+import { _omit } from '../../utils/_'
 
 const StoreItem = ({ id, title, description, price, src, onSelect }) => {
     const onSelectHandler = (event) => onSelect(id, event)

@@ -1,0 +1,20 @@
+.profile {
+    width: 100%;
+}
+
+.profile_name {
+    margin: 20px 0;
+    width: 200px;
+}
+
+.profile_name h2{
+    margin: 0;
+}
+
+.profile_name input {
+    font-size: 1.5em;
+}
+
+.profile_history-orders-table {
+    margin: 10px 0;
+}

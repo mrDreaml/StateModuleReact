@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react'
 import useSelector from '../../lib/useSelector'
-import { basketModule, dataModule } from '../../state'
+import {basketModule, dataModule, profileModule} from '../../state'
 
 import './Basket.css'
 import { _omit } from '../../utils/_'
 
 const Table = ({ items, onRemoveItem }) => (
-    <table className='basket_table'>
+    <table>
         <thead>
         <tr>
             <th>ID</th>
@@ -47,6 +47,8 @@ const Basket = () => {
     const handlePay = () => {
         alert('Now you pay:)')
         alert('Success')
+        const newHistoryOrders = { date: new Date(), items: [...filteredItems] }
+        profileModule.state.historyOrders = [...profileModule.state.historyOrders, newHistoryOrders]
         basketModule.state.orders = {}
     }
 
