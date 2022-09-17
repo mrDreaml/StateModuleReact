@@ -1,16 +1,24 @@
 {
   "name": "state-module-react",
-  "version": "0.2.0",
-  "description": "",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "version": "0.5.1",
+  "description": "helps to integrate react application with state-module",
+  "main": "dist/useSelector.js",
+  "module": "dist/useSelector.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
-    "build": "babel src/lib --out-dir dist --copy-files",
+    "build": "set NODE_ENV=production && babel src/lib --out-dir dist --copy-files",
     "start-app": "react-scripts start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andreev Dmitry",
   "license": "ISC",
+  "dependencies": {
+    "core-js": "^3.25.1",
+    "state-module": "github:mrDreaml/stateModule"
+  },
   "devDependencies": {
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.13",
@@ -25,7 +33,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "state-module": "github:mrDreaml/stateModule",
     "web-vitals": "^2.1.4"
   },
   "browserslist": {
