@@ -6,6 +6,8 @@ module.exports = {
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
+        'plugin:testing-library/react',
+        'plugin:jest-dom/recommended',
     ],
     parserOptions: {
         ecmaFeatures: {
@@ -16,11 +18,32 @@ module.exports = {
     },
     plugins: [
         'react',
+        'testing-library',
+        'jest-dom',
     ],
     globals: {
         process: true,
     },
+    overrides: [
+        {
+            files: ['*.test.js'],
+            rules: {
+                'react/react-in-jsx-scope': 0,
+            },
+            globals: {
+                describe: true,
+                test: true,
+                expect: true,
+            },
+        },
+    ],
     rules: {
+        'testing-library/no-render-in-setup': 'error',
+        'testing-library/no-wait-for-empty-callback': 'error',
+        'testing-library/prefer-explicit-assert': 'error',
+        'testing-library/prefer-presence-queries': 'error',
+        'testing-library/prefer-screen-queries': 'error',
+        'testing-library/prefer-wait-for': 'error',
         semi: [2, 'never'],
         'no-prototype-builtins': 'off',
         'react/jsx-handler-names': 'off',

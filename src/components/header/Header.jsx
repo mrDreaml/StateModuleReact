@@ -14,9 +14,33 @@ const NavMenu = () => {
 
     return (
         <nav className='app-header_nav'>
-            <button name='store' onClick={handleNavigation} className={getClassName(activeTab, alertTab, 'store')}>store</button>
-            <button name='basket' onClick={handleNavigation} className={getClassName(activeTab, alertTab, 'basket')}>basket</button>
-            <button name='profile' onClick={handleNavigation} className={getClassName(activeTab, alertTab, 'profile')}>profile</button>
+            <button
+                name='store'
+                role='tab'
+                aria-selected={activeTab === 'store'}
+                onClick={handleNavigation}
+                className={getClassName(activeTab, alertTab, 'store')}
+            >
+                store
+            </button>
+            <button
+                name='basket'
+                role='tab'
+                aria-selected={activeTab === 'basket'}
+                onClick={handleNavigation}
+                className={getClassName(activeTab, alertTab, 'basket')}
+            >
+                basket
+            </button>
+            <button
+                name='profile'
+                role='tab'
+                aria-selected={activeTab === 'profile'}
+                onClick={handleNavigation}
+                className={getClassName(activeTab, alertTab, 'profile')}
+            >
+                profile
+            </button>
         </nav>
     )
 }
