@@ -9,6 +9,7 @@ const StoreItem = ({ id, title, description, price, src, onSelect }) => {
     const onKeyDownHandler = (event) => event.code === 'Enter' && onSelectHandler(event)
     return (
         <div
+            role='store-item'
             className='store-item'
             title='Click to add to basket'
             tabIndex={0}

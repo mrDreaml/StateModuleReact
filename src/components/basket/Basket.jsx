@@ -22,7 +22,7 @@ const Table = ({ items, onRemoveItem }) => (
                 <td>{item.title}</td>
                 <td>{item.price}</td>
                 <td className='basket_table-control-column'>
-                    <button data-id={item.id} onClick={onRemoveItem}>remove</button>
+                    <button name='remove' data-id={item.id} onClick={onRemoveItem}>remove</button>
                 </td>
             </tr>
         ))}
@@ -58,7 +58,13 @@ const Basket = () => {
         <div className='basket'>
             <Table items={filteredItems} onRemoveItem={onRemoveItemHandler} />
             <h2 className='basket_totalSum'>Total: {totalSum}$</h2>
-            <button disabled={isPayDisabled} className={`basket_button-pay ${isPayDisabled ? 'disabled' : ''}`} onClick={handlePay}>Pay</button>
+            <button
+                name='pay'
+                disabled={isPayDisabled}
+                className={`basket_button-pay ${isPayDisabled ? 'disabled' : ''}`}
+                onClick={handlePay}>
+                Pay
+            </button>
         </div>
     )
 }

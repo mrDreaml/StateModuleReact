@@ -22,7 +22,7 @@ const Main = () => {
 
 const App = () => (
     <div className='app'>
-        <Header />
+      <Header />
       <Main />
     </div>
   )

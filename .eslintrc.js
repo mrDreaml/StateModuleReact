@@ -34,6 +34,7 @@ module.exports = {
                 describe: true,
                 test: true,
                 expect: true,
+                afterEach: true,
             },
         },
     ],

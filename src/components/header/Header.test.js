@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import Header from './Header.jsx'
 import { navigationModule } from '../../state'
+import userEvent from '@testing-library/user-event'
 
-// TODO: check styles? toHaveStyle
 describe('test Header', () => {
     test('check label text', () => {
         render(<Header />)
@@ -16,17 +16,29 @@ describe('test Header', () => {
         expect(screen.getByRole('tab', { name: 'basket', selected: false })).toBeInTheDocument()
         expect(screen.getByRole('tab', { name: 'profile', selected: false })).toBeInTheDocument()
     })
-    test('check navigation after change activeTab state', () => {
+    test('check navigation after change activeTab state', async () => {
         navigationModule.state.activeTab = 'basket'
-        const { rerender } = render(<Header />)
-        let navigation = screen.getByRole('navigation')
+        render(<Header />)
+        const navigation = screen.getByRole('navigation')
         expect(navigation).toBeInTheDocument()
         expect(screen.getByRole('tab', { name: 'store', selected: false })).toBeInTheDocument()
         expect(screen.getByRole('tab', { name: 'basket', selected: true })).toBeInTheDocument()
         expect(screen.getByRole('tab', { name: 'profile', selected: false })).toBeInTheDocument()
         navigationModule.state.activeTab = 'profile'
-        rerender(<Header />)
-        expect(screen.getByRole('tab', { name: 'store', selected: false })).toBeInTheDocument()
+        expect(await screen.findByRole('tab', { name: 'store', selected: false })).toBeInTheDocument()
+        expect(await screen.findByRole('tab', { name: 'basket', selected: false })).toBeInTheDocument()
+        expect(await screen.findByRole('tab', { name: 'profile', selected: true })).toBeInTheDocument()
+        navigationModule.reset()
+    })
+    test('check navigation after change activeTab by click', async () => {
+        render(<Header />)
+        const navigation = screen.getByRole('navigation')
+        expect(navigation).toBeInTheDocument()
+        expect(screen.getByRole('tab', { name: 'store', selected: true })).toBeInTheDocument()
+        expect(screen.getByRole('tab', { name: 'basket', selected: false })).toBeInTheDocument()
+        expect(screen.getByRole('tab', { name: 'profile', selected: false })).toBeInTheDocument()
+        userEvent.click(screen.getByRole('tab', { name: 'basket' }))
+        expect(await screen.findByRole('tab', { name: 'store', selected: false })).toBeInTheDocument()
         expect(screen.getByRole('tab', { name: 'basket', selected: true })).toBeInTheDocument()
         expect(screen.getByRole('tab', { name: 'profile', selected: false })).toBeInTheDocument()
     })
