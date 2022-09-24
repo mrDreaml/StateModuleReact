@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react'
 import useSelector from '../../lib/useSelector'
-import {basketModule, dataModule, profileModule} from '../../state'
+import { basketModule, dataModule } from '../../state'
 
 import './Basket.css'
-import { _omit } from '../../utils/_'
+import { removeOrder, setOrdersAfterPay } from '../../state/actions/basket'
+import { addHistoryOrders } from '../../state/actions/profile'
 
 const Table = ({ items, onRemoveItem }) => (
     <table>
@@ -41,15 +42,14 @@ const Basket = () => {
         (acc, { price }) => acc + parseFloat(price), 0), [filteredItems])
 
     const onRemoveItemHandler = event => {
-        basketModule.state.orders = _omit([event.target.dataset.id], basketModule.state.orders)
+        removeOrder(event.target.dataset.id)
     }
 
     const handlePay = () => {
         alert('Now you pay:)')
         alert('Success')
-        const newHistoryOrders = { date: new Date(), items: [...filteredItems] }
-        profileModule.state.historyOrders = [...profileModule.state.historyOrders, newHistoryOrders]
-        basketModule.state.orders = {}
+        addHistoryOrders(items)
+        setOrdersAfterPay()
     }
 
     const isPayDisabled = !filteredItems.length

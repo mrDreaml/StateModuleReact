@@ -1,21 +1,15 @@
 import React, { useEffect } from 'react'
-import { dataModule } from '../../state'
 
 import StoreHeader from './StoreHeader'
 import StoreDataView from './StoreDataView'
-import { STORE_ITEMS } from './constants'
+import { loadData } from '../../state/actions/data'
 
 import './Store.css'
 
-const getData = () => new Promise(res => {
-    setTimeout(() => { // simulate loading
-        res(STORE_ITEMS)
-    }, 1000)
-})
 
 const Store = () => {
     useEffect(() => {
-        getData().then(res => dataModule.state.items = res)
+        loadData()
     }, [])
     return (
         <div className='store'>

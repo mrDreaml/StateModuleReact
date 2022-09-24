@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { navigationModule } from '../../state'
+import { storeModule } from '../../state'
+import { addFilter } from '../../state/actions/store'
 
 const PriceFilter = ({ name, initialValue = '0', onChange }) => {
     const [value, setValue] = useState(initialValue)
@@ -39,10 +40,8 @@ const SearchFilter = ({ name, placeholder = 'search..', initialValue = '', onCha
 }
 
 const StoreHeader = () => {
-    const filterHandler = useCallback((name, value) => {
-        navigationModule.state.basketFilters = { ...navigationModule.state.basketFilters, [name]: value }
-    }, [])
-    const initialValues = useMemo(() => navigationModule.state.basketFilters, [])
+    const filterHandler = useCallback(addFilter, [])
+    const initialValues = useMemo(() => storeModule.state.filters, [])
     return (
         <header className='store-header'>
             <SearchFilter name='search' onChange={filterHandler} initialValue={initialValues.search} />

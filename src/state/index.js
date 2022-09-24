@@ -1,26 +1,14 @@
-import StateModule from 'state-module'
+import { navigationModule } from './actions/navigation'
+import { dataModule } from './actions/data'
+import { storeModule } from './actions/store'
+import { basketModule } from './actions/basket'
+import { profileModule } from './actions/profile'
 
-export const navigationModule = new StateModule({
-    activeTab: 'store',
-    alertTab: null,
-    basketFilters: { search: '', price: '0' },
-}, 300)
-
-export const dataModule = new StateModule({
-    items: [],
-})
-
-export const basketModule = new StateModule({
-    orders: {},
-})
-
-export const profileModule = new StateModule({
-    userName: 'User Name',
-    historyOrders: [],
-})
+export { navigationModule, dataModule, storeModule, basketModule, profileModule }
 
 window.getState = () => console.log({
-    navigationState: { ...navigationModule.state },
+    storeModule: { ...storeModule.state },
+    navigationModule: { ...navigationModule.state },
     dataModule: { ...dataModule.state },
     basketModule: { ...basketModule.state },
     profileModule: { ...profileModule.state },

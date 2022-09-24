@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react'
 import useSelector from '../../lib/useSelector'
-import { basketModule, dataModule, navigationModule } from '../../state'
+import { basketModule, dataModule, storeModule } from '../../state'
 import { getFilteredData } from '../../state/selectors'
-import { _omit } from '../../utils/_'
+import { alertTab } from '../../state/actions/navigation'
+import { addOrder, removeOrder } from '../../state/actions/basket'
 
 const StoreItem = ({ id, title, description, price, src, onSelect }) => {
     const onSelectHandler = (event) => onSelect(id, event)
@@ -24,19 +25,12 @@ const StoreItem = ({ id, title, description, price, src, onSelect }) => {
 }
 
 const StoreDataView = () => {
-    const basketFilters = useSelector(navigationModule, state => state.basketFilters)
-    const storeItems = useSelector(dataModule, state => getFilteredData(state, { basketFilters }), [basketFilters])
+    const filters = useSelector(storeModule, state => state.filters)
+    const storeItems = useSelector(dataModule, state => getFilteredData(state, { filters }), [filters])
 
     const clickHandler = useCallback((id, _event) => {
-        navigationModule.state.alertTab = 'basket'
-        if (basketModule.state.orders[id]) {
-            basketModule.state.orders = _omit([id], basketModule.state.orders)
-        } else {
-            basketModule.state.orders = { ...basketModule.state.orders, [id]: true }
-        }
-        setTimeout(() => {
-            navigationModule.state.alertTab = null
-        }, 300)
+        alertTab('basket');
+        (basketModule.state.orders[id] ? removeOrder : addOrder)(id)
     }, [])
 
     return (

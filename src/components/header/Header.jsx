@@ -1,6 +1,7 @@
 import React from 'react'
 import useSelector from '../../lib/useSelector'
 import { navigationModule } from '../../state'
+import { changeActiveTab } from '../../state/actions/navigation'
 
 const getClassName = (activeTab, alertTab, name) => (activeTab === name ? 'button_active' : '').concat(
     alertTab === name ? ' app-header_button_effect' : ''
@@ -8,9 +9,7 @@ const getClassName = (activeTab, alertTab, name) => (activeTab === name ? 'butto
 
 const NavMenu = () => {
     const { activeTab, alertTab } = useSelector(navigationModule, state => state)
-    const handleNavigation = e => {
-        navigationModule.state.activeTab = e.target.name
-    }
+    const handleNavigation = e => changeActiveTab(e.target.name)
 
     return (
         <nav className='app-header_nav'>

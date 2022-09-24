@@ -4,6 +4,7 @@ import useSelector from '../../lib/useSelector'
 import { profileModule } from '../../state'
 
 import './Profile.css'
+import { setProfileUserName } from '../../state/actions/profile'
 
 const Name = (props) => {
     const valueRef = useRef()
@@ -21,7 +22,7 @@ const Name = (props) => {
         valueRef.current.value = props.value
     }, [props.value])
     useEffect(() => () => {
-        profileModule.state.userName = valueRef.current.value
+        setProfileUserName(valueRef.current.value)
     }, [])
 
     return <div className='profile_name' title='double click to edit'>
