@@ -15,35 +15,25 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-const deepFreeze = obj => {
-  Object.keys(obj).forEach(prop => {
-    if (typeof obj[prop] === 'object' && !Object.isFrozen(obj[prop])) {
-      deepFreeze(obj[prop]);
-    }
-  });
-  return Object.freeze(obj);
-};
-
 const EMPTY_ARRAY = [];
 
 const useSelector = function useSelector(StateModule, selector) {
   let deps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : EMPTY_ARRAY;
+  const ref = (0, _react.useRef)();
+  ref.current = selector;
   const [state, updateState] = (0, _react.useState)(selector(_objectSpread({}, StateModule.state)));
   (0, _react.useEffect)(() => {
-    updateState(selector(_objectSpread({}, StateModule.state)));
+    updateState(ref.current(_objectSpread({}, StateModule.state)));
   }, deps);
   (0, _react.useEffect)(() => {
     const subscriber = newRootState => {
-      const newState = selector(newRootState);
-
-      if (state !== newState) {
-        updateState(newState);
-      }
+      const newState = ref.current(newRootState);
+      updateState(newState);
     };
 
     StateModule.subscribe(subscriber);
     return () => StateModule.unsubscribe(subscriber);
-  }, [state]);
+  }, []);
   return state;
 };
 
