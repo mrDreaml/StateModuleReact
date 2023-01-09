@@ -1,14 +1,17 @@
 import { useEffect, useState, useRef } from 'react'
 
 const EMPTY_ARRAY = []
+const identity = s => s
 
-const useSelector = (StateModule, selector, deps = EMPTY_ARRAY) => {
+const useSelector = (StateModule, selector = identity, deps = EMPTY_ARRAY) => {
     const ref = useRef()
     ref.current = selector
-    const [state, updateState] = useState(selector({ ...StateModule.state }))
+    const [state, updateState] = useState()
+
     useEffect(() => {
         updateState(ref.current({ ...StateModule.state }))
     }, deps)
+
     useEffect(() => {
         const subscriber = (newRootState) => {
             const newState = ref.current(newRootState)
@@ -17,7 +20,8 @@ const useSelector = (StateModule, selector, deps = EMPTY_ARRAY) => {
         StateModule.subscribe(subscriber)
         return () => StateModule.unsubscribe(subscriber)
     }, [])
-    return state
+
+    return state ?? selector({ ...StateModule.state })
 }
 
 export default useSelector

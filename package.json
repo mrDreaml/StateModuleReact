@@ -1,6 +1,6 @@
 {
   "name": "state-module-react",
-  "version": "0.5.1",
+  "version": "0.8.0",
   "description": "helps to integrate react application with state-module",
   "main": "dist/useSelector.js",
   "module": "dist/useSelector.js",

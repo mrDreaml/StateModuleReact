@@ -17,11 +17,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 const EMPTY_ARRAY = [];
 
-const useSelector = function useSelector(StateModule, selector) {
+const identity = s => s;
+
+const useSelector = function useSelector(StateModule) {
+  let selector = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : identity;
   let deps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : EMPTY_ARRAY;
   const ref = (0, _react.useRef)();
   ref.current = selector;
-  const [state, updateState] = (0, _react.useState)(selector(_objectSpread({}, StateModule.state)));
+  const [state, updateState] = (0, _react.useState)();
   (0, _react.useEffect)(() => {
     updateState(ref.current(_objectSpread({}, StateModule.state)));
   }, deps);
@@ -34,7 +37,7 @@ const useSelector = function useSelector(StateModule, selector) {
     StateModule.subscribe(subscriber);
     return () => StateModule.unsubscribe(subscriber);
   }, []);
-  return state;
+  return state !== null && state !== void 0 ? state : selector(_objectSpread({}, StateModule.state));
 };
 
 var _default = useSelector;
