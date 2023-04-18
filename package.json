@@ -1,6 +1,6 @@
 {
   "name": "state-module-react",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "helps to integrate react application with state-module",
   "main": "dist/useSelector.js",
   "module": "dist/useSelector.js",
@@ -18,6 +18,11 @@
   "dependencies": {
     "core-js": "^3.25.1",
     "state-module": "github:mrDreaml/stateModule"
+  },
+  "peerDependencies":  {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.10",
