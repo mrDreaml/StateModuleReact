@@ -4,41 +4,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
 require("core-js/modules/web.dom-collections.iterator.js");
-
 var _react = require("react");
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 const EMPTY_ARRAY = [];
-
 const identity = s => s;
-
 const useSelector = function useSelector(StateModule) {
   let selector = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : identity;
   let deps = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : EMPTY_ARRAY;
   const ref = (0, _react.useRef)();
   ref.current = selector;
   const [state, updateState] = (0, _react.useState)();
+  const isMultyStore = Array.isArray(StateModule);
+  const getMultyState = () => StateModule.map(m => m.state);
   (0, _react.useEffect)(() => {
-    updateState(ref.current(_objectSpread({}, StateModule.state)));
+    updateState(ref.current(...(isMultyStore ? getMultyState() : [StateModule.state])));
   }, deps);
   (0, _react.useEffect)(() => {
-    const subscriber = newRootState => {
-      const newState = ref.current(newRootState);
-      updateState(newState);
+    const subscriber = () => {
+      updateState(ref.current(...(isMultyStore ? getMultyState() : [StateModule.state])));
     };
-
-    StateModule.subscribe(subscriber);
-    return () => StateModule.unsubscribe(subscriber);
+    isMultyStore ? StateModule.forEach(m => m.subscribe(subscriber)) : StateModule.subscribe(subscriber);
+    return () => isMultyStore ? StateModule.forEach(m => m.unsubscribe(subscriber)) : StateModule.unsubscribe(subscriber);
   }, []);
-  return state !== null && state !== void 0 ? state : selector(_objectSpread({}, StateModule.state));
+  return state !== null && state !== void 0 ? state : selector(...(isMultyStore ? getMultyState() : [StateModule.state]));
 };
-
-var _default = useSelector;
-exports.default = _default;
+var _default = exports.default = useSelector;
