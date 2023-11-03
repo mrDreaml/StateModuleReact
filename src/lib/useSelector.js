@@ -8,20 +8,22 @@ const useSelector = (StateModule, selector = identity, deps = EMPTY_ARRAY) => {
     ref.current = selector
     const [state, updateState] = useState()
 
+    const isMultyStore = Array.isArray(StateModule)
+    const getMultyState = () => StateModule.map(m => m.state)
+
     useEffect(() => {
-        updateState(ref.current({ ...StateModule.state }))
+        updateState(ref.current(...isMultyStore ? getMultyState() : [StateModule.state]))
     }, deps)
 
     useEffect(() => {
-        const subscriber = (newRootState) => {
-            const newState = ref.current(newRootState)
-            updateState(newState)
+        const subscriber = () => {
+            updateState(ref.current(...isMultyStore ? getMultyState() : [StateModule.state]))
         }
-        StateModule.subscribe(subscriber)
-        return () => StateModule.unsubscribe(subscriber)
+        isMultyStore ? StateModule.forEach(m => m.subscribe(subscriber)) : StateModule.subscribe(subscriber)
+        return () => isMultyStore ? StateModule.forEach(m => m.unsubscribe(subscriber)) : StateModule.unsubscribe(subscriber)
     }, [])
 
-    return state ?? selector({ ...StateModule.state })
+    return state ?? selector(...isMultyStore ? getMultyState() : [StateModule.state])
 }
 
 export default useSelector

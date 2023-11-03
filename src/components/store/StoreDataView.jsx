@@ -24,9 +24,13 @@ const StoreItem = ({ id, title, description, price, src, onSelect }) => {
     )
 }
 
+let render = 0
+
 const StoreDataView = () => {
-    const filters = useSelector(storeModule, state => state.filters)
-    const storeItems = useSelector(dataModule, state => getFilteredData(state, { filters }), [filters])
+    const storeItems = useSelector(
+        [storeModule, dataModule],
+         (storeState, dataState) => getFilteredData(dataState, { filters: storeState.filters })
+        )
 
     const clickHandler = useCallback((id, _event) => {
         alertTab('basket');
@@ -35,6 +39,7 @@ const StoreDataView = () => {
 
     return (
         <main className='store-main'>
+            <h1>{render++}</h1>
             {!storeItems.length && 'Loading...'}
             {storeItems.map(({ id, title, description, price, src }) =>
                 <StoreItem
